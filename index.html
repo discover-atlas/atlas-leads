@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Leads – HVAC Lead Generating Engine & CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111214;
+    --card: #16191e;
+    --border: #1f2430;
+    --orange: #f36c21;
+    --orange-glow: rgba(243,108,33,0.18);
+    --orange-dim: #c4541a;
+    --white: #f0ede8;
+    --muted: #7a8299;
+    --accent: #1a8fff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ---- NOISE OVERLAY ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--orange); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--black) !important;
+    padding: 0.55rem 1.3rem;
+    border-radius: 4px;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+
+  .nav-cta:hover { background: #ff7a30 !important; transform: translateY(-1px); }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 60% 40%, rgba(243,108,33,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(26,143,255,0.06) 0%, transparent 60%);
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--orange-glow);
+    border: 1px solid rgba(243,108,33,0.35);
+    color: var(--orange);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 1.8s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 9vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    max-width: 820px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  h1 .highlight { color: var(--orange); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-top: 1.8rem;
+    font-weight: 300;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 2.8rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.9rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #ff7a30;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(243,108,33,0.35);
+  }
+
+  .btn-ghost {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--white); }
+
+  /* stat strip */
+  .stat-strip {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s 0.45s ease both;
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* diagonal divider */
+  .divider {
+    width: 1px;
+    background: var(--border);
+    height: 60px;
+    align-self: center;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- PROBLEM SECTION ---- */
+  .section {
+    padding: 7rem 4rem;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.2rem;
+  }
+
+  .problem {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .problem h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+  }
+
+  .problem p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-top: 1.2rem;
+    font-weight: 300;
+  }
+
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), transparent);
+  }
+
+  .problem-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .problem-stat-label {
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 0.4rem;
+  }
+
+  .problem-stat-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    font-weight: 300;
+  }
+
+  .problem-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .problem-item::before {
+    content: '✕';
+    color: #e05050;
+    font-size: 0.75rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ---- SERVICES ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 3.5rem;
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.25s;
+  }
+
+  .service-card:hover { background: var(--card); }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    background: var(--orange-glow);
+    border: 1px solid rgba(243,108,33,0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.55rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.8rem;
+    color: var(--white);
+  }
+
+  .service-card p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(243,108,33,0.3);
+    border-radius: 2px;
+  }
+
+  /* section header */
+  .section-header { max-width: 580px; }
+
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+  }
+
+  .section-header p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-top: 1rem;
+    font-weight: 300;
+  }
+
+  /* ---- HOW IT WORKS ---- */
+  .how { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .step {
+    display: flex;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+    transition: background 0.2s;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    width: 55px; height: 55px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--orange);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-content p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 600px;
+  }
+
+  /* ---- CTA SECTION ---- */
+  .cta-section {
+    text-align: center;
+    padding: 8rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(243,108,33,0.09) 0%, transparent 70%);
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    position: relative;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 1.2rem auto 2.8rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .cta-section .btn-primary {
+    font-size: 1rem;
+    padding: 1rem 2.5rem;
+    position: relative;
+  }
+
+  .cta-note {
+    margin-top: 1.2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--orange); }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ---- SCROLL REVEAL ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero, .section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .problem-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .stat-strip { flex-wrap: wrap; gap: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Atlas <span>Leads</span></a>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" target="_blank" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">HVAC Lead Generation Engine</div>
+  <h1>Never Miss<br>an <span class="highlight">HVAC</span><br>Job Again.</h1>
+  <p class="hero-sub">
+    <strong>Leads captured. Jobs booked. Revenue secured.</strong><br>
+    We install a Lead Generating Engine + CRM that captures every lead and books jobs — automatically.
+  </p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" target="_blank" class="btn-primary">Book a Free 15-Min Call →</a>
+    <a href="#services" class="btn-ghost">See how it works ↓</a>
+  </div>
+  <div class="stat-strip">
+    <div class="stat">
+      <span class="stat-num">20–40%</span>
+      <span class="stat-label">of leads lost by most HVAC businesses</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">lead capture with our system</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="stat-num">24/7</span>
+      <span class="stat-label">automated follow-up & booking</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section problem" id="problem">
+  <div class="problem-inner">
+    <div class="reveal">
+      <div class="section-label">// The Problem</div>
+      <h2>You're Losing Jobs Every Single Day</h2>
+      <p>Most HVAC businesses lose 20–40% of their leads simply from missed calls and slow follow-ups. Every unanswered call is a job that went to your competitor.</p>
+      <div class="problem-items">
+        <div class="problem-item">Missed calls go unanswered — leads move on instantly</div>
+        <div class="problem-item">Slow follow-up means losing to faster competitors</div>
+        <div class="problem-item">Leads from Google, website forms, and calls fall through the cracks</div>
+        <div class="problem-item">No system to track, follow up, and book jobs consistently</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="problem-card">
+        <div class="problem-stat">40%</div>
+        <div class="problem-stat-label">Average leads lost by HVAC businesses</div>
+        <div class="problem-stat-sub">Due to missed calls and delayed follow-up responses</div>
+        <div style="height: 1.5px; background: var(--border); margin: 1.5rem 0;"></div>
+        <div class="problem-stat" style="font-size: 3rem;">$0</div>
+        <div class="problem-stat-label">Revenue from jobs you never knew about</div>
+        <div class="problem-stat-sub">Atlas Leads ensures every inquiry becomes a booked job</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-header reveal">
+    <div class="section-label">// Our Solution</div>
+    <h2>Everything You Need to Capture & Book More Jobs</h2>
+    <p>A complete done-for-you system that handles lead capture, follow-up, and booking — so you can focus on the work.</p>
+  </div>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">📡</div>
+      <h3>Lead Generating Engine</h3>
+      <p>Capture every lead from calls, website forms, and Google inquiries. Optional custom website or landing page included to maximize inbound flow.</p>
+      <span class="service-tag">Always On</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Automated Follow-Up</h3>
+      <p>Instant texts and emails triggered for every missed call or form submission. Strike while the iron is hot — before your competition can respond.</p>
+      <span class="service-tag">Instant Response</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <h3>CRM & Booking System</h3>
+      <p>Track every lead in one clean dashboard. Schedule jobs, manage pipeline stages, and never let a prospect slip through the cracks again.</p>
+      <span class="service-tag">Full Visibility</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="section-header reveal">
+    <div class="section-label">// How It Works</div>
+    <h2>Set Up Once. Run Forever.</h2>
+    <p>We handle the entire installation and configuration. You get a fully operational lead machine without the technical headaches.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Book a Discovery Call</h3>
+        <p>In 15 minutes, we learn about your HVAC business, your current lead flow, and where jobs are being lost. No obligation — just clarity.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>We Build Your System</h3>
+        <p>Our team sets up your Lead Generating Engine, automated follow-up sequences, and CRM — fully tailored to your business and service area.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Leads Flow In Automatically</h3>
+        <p>Every call, form, and Google inquiry is captured and immediately followed up. Prospects get contacted before they even consider calling someone else.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Jobs Get Booked & Revenue Grows</h3>
+        <p>Your CRM keeps every lead organized. You see exactly what's in your pipeline and watch your calendar fill up with booked jobs — on autopilot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>Ready to Stop<br>Losing Jobs?</h2>
+  <p>Book a free 15-minute call and we'll show you exactly how many leads you're currently missing — and how to fix it.</p>
+  <a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" target="_blank" class="btn-primary">Book Your Free Call Now →</a>
+  <div class="cta-note">No commitment. No sales pressure. Just clarity.</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Atlas <span>Leads</span></a>
+  <div class="footer-copy">© 2025 Atlas Leads Agency. All rights reserved.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger children
+  document.querySelectorAll('.services-grid').forEach(grid => {
+    grid.querySelectorAll('.service-card').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.12}s`;
+    });
+  });
+</script>
+</body>
+</html>
