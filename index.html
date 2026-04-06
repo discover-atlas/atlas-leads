@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Leads – HVAC Lead Generating Engine & CRM</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--black:#0a0a0a;
+--dark:#111214;
+--card:#16191e;
+--border:#1f2430;
+--orange:#f36c21;
+--orange-glow:rgba(243,108,33,.18);
+--white:#f0ede8;
+--muted:#7a8299;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+background:var(--black);
+color:var(--white);
+font-family:'DM Sans',sans-serif;
+overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;right:0;
+display:flex;justify-content:space-between;align-items:center;
+padding:1.2rem 4rem;
+border-bottom:1px solid var(--border);
+background:rgba(10,10,10,.9);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+.nav-logo{
+font-family:'Bebas Neue',sans-serif;
+font-size:1.7rem;
+letter-spacing:.12em;
+text-decoration:none;
+color:var(--white);
+}
+.nav-logo span{color:var(--orange)}
+nav ul{display:flex;gap:2.5rem;list-style:none}
+nav a{color:var(--muted);text-decoration:none;font-size:.85rem;text-transform:uppercase}
+.nav-cta{
+background:var(--orange);
+color:#000!important;
+padding:.6rem 1.3rem;border-radius:4px;font-weight:600
+}
+
+/* HERO */
+.hero{
+min-height:100vh;
+display:flex;flex-direction:column;justify-content:center;
+padding:8rem 4rem 4rem;
+}
+h1{
+font-family:'Bebas Neue',sans-serif;
+font-size:clamp(4rem,9vw,8rem);
+line-height:.95;
+}
+.highlight{color:var(--orange)}
+.hero-sub{color:var(--muted);margin-top:1.5rem;max-width:520px;line-height:1.7}
+.btn-primary{
+display:inline-block;margin-top:2rem;
+background:var(--orange);
+color:#000;text-decoration:none;
+padding:1rem 2rem;border-radius:4px;font-weight:600
+}
+
+/* SECTIONS */
+.section{padding:6rem 4rem}
+h2{
+font-family:'Bebas Neue',sans-serif;
+font-size:clamp(2.5rem,5vw,4rem);
+margin-bottom:1rem;
+}
+p{color:var(--muted);line-height:1.8}
+
+/* SERVICES */
+.services{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:2rem;margin-top:3rem;
+}
+.card{
+background:var(--card);
+border:1px solid var(--border);
+padding:2rem;border-radius:8px;
+}
+.card h3{
+font-family:'Bebas Neue',sans-serif;
+font-size:1.6rem;margin-bottom:.6rem;
+}
+
+/* CTA */
+.cta{text-align:center;padding:7rem 2rem}
+footer{
+border-top:1px solid var(--border);
+padding:2rem 4rem;
+text-align:center;
+color:var(--muted)
+}
+
+/* MOBILE */
+@media(max-width:900px){
+nav{padding:1rem}
+nav ul{display:none}
+.hero,.section{padding:6rem 1.5rem}
+.services{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="#" class="nav-logo">Atlas <span>Leads</span></a>
+<ul>
+<li><a href="#services">Services</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" target="_blank" class="nav-cta">Book a Call</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<h1>Never Miss<br>an <span class="highlight">HVAC</span><br>Job Again</h1>
+<p class="hero-sub">
+Leads captured. Jobs booked. Revenue secured.  
+We install a Lead Generating Engine + CRM that captures every lead and books jobs automatically.
+</p>
+<a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" class="btn-primary" target="_blank">Book a Free Call</a>
+</section>
+
+<section class="section" id="services">
+<h2>Everything You Need to Capture & Book More Jobs</h2>
+<div class="services">
+<div class="card">
+<h3>Lead Generating Engine</h3>
+<p>Capture every call, form, and Google inquiry automatically.</p>
+</div>
+<div class="card">
+<h3>Automated Follow-Up</h3>
+<p>Instant SMS and email follow-up for every missed opportunity.</p>
+</div>
+<div class="card">
+<h3>CRM & Booking</h3>
+<p>Track leads, schedule jobs, and see your pipeline clearly.</p>
+</div>
+</div>
+</section>
+
+<section class="cta" id="contact">
+<h2>Ready to Stop Losing Jobs?</h2>
+<a href="https://calendly.com/drikusbisschoff/al-agency-discovery-call" class="btn-primary" target="_blank">Book Your Free Call</a>
+</section>
+
+<footer>
+© 2025 Atlas Leads Agency. All rights reserved.
+</footer>
+
+</body>
+</html>
